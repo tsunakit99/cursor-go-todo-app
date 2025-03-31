@@ -3,13 +3,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import {
-    Checkbox,
-    IconButton,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    TextField
+  Checkbox,
+  IconButton,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  TextField
 } from '@mui/material';
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { Todo } from '../types/todo';
@@ -97,11 +97,11 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggleComplete, onDelete, o
         </ListItemIcon>
         {isEditing ? (
           <TextField
-            fullWidth
             value={editTitle}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             autoFocus
+            sx={{minWidth: '500px', maxWidth: '1000px'}}
           />
         ) : (
           <ListItemText
