@@ -32,7 +32,10 @@ const TodoForm = ({ onAdd }) => {
           color="primary"
           startIcon={<AddIcon />}
           disabled={!title.trim()}
-          sx={{ display: 'flex', alignItems: 'center' }}
+          sx={{ 
+            minWidth: '80px',
+            whiteSpace: 'nowrap'
+          }}
         >
           追加
         </Button>
