@@ -29,7 +29,9 @@ const TodoService = {
   // Todoを更新
   update: async (id: number, todo: Partial<Todo>): Promise<Todo> => {
     try {
+      console.log('更新リクエスト:', { id, todo });
       const response: AxiosResponse<Todo> = await axios.put(`${API_URL}/todos/${id}`, todo);
+      console.log('更新レスポンス:', response.data);
       return response.data;
     } catch (error) {
       console.error(`Error updating todo ${id}:`, error);

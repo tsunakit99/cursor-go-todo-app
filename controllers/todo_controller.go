@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -90,10 +91,26 @@ func UpdateTodo(c *gin.Context) {
 		return
 	}
 
-	models.DB.Model(&todo).Updates(models.Todo{
-		Title:     input.Title,
-		Completed: input.Completed,
-	})
+	// 更新前のデータをログ出力
+	fmt.Printf("更新前: ID=%d, Title=%s, Completed=%v\n", todo.ID, todo.Title, todo.Completed)
+	fmt.Printf("入力データ: Title=%s, Completed=%v\n", input.Title, input.Completed)
+
+	// 直接更新
+	if err := models.DB.Model(&todo).Updates(map[string]interface{}{
+		"title":     input.Title,
+		"completed": input.Completed,
+	}).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "更新に失敗しました"})
+		return
+	}
+
+	// 更新後のデータを再取得
+	if err := models.DB.First(&todo, c.Param("id")).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "更新後のデータの取得に失敗しました"})
+		return
+	}
+
+	fmt.Printf("更新後: ID=%d, Title=%s, Completed=%v\n", todo.ID, todo.Title, todo.Completed)
 
 	c.JSON(http.StatusOK, todo)
 }

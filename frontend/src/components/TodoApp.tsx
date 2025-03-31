@@ -65,7 +65,10 @@ const TodoApp: React.FC = () => {
       const todoToUpdate = todos.find(todo => todo.id === id);
       if (!todoToUpdate) return;
 
-      const updatedTodo = await TodoService.update(id, { ...todoToUpdate, completed });
+      const updatedTodo = await TodoService.update(id, { 
+        title: todoToUpdate.title,
+        completed 
+      });
       setTodos(todos.map(todo => (todo.id === id ? updatedTodo : todo)));
       showNotification(completed ? 'タスクを完了しました' : 'タスクを未完了に戻しました');
     } catch (err) {
