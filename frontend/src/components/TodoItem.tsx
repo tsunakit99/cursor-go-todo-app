@@ -11,42 +11,54 @@ import {
     ListItemText,
     TextField
 } from '@mui/material';
-import React, { useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { Todo } from '../types/todo';
 
-const TodoItem = ({ todo, onToggleComplete, onDelete, onUpdate }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editTitle, setEditTitle] = useState(todo.title);
+interface TodoItemProps {
+  todo: Todo;
+  onToggleComplete: (id: number, completed: boolean) => void;
+  onDelete: (id: number) => void;
+  onUpdate: (id: number, title: string) => void;
+}
 
-  const handleToggle = () => {
+const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggleComplete, onDelete, onUpdate }) => {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editTitle, setEditTitle] = useState<string>(todo.title);
+
+  const handleToggle = (): void => {
     onToggleComplete(todo.id, !todo.completed);
   };
 
-  const handleDelete = () => {
+  const handleDelete = (): void => {
     onDelete(todo.id);
   };
 
-  const handleEdit = () => {
+  const handleEdit = (): void => {
     setIsEditing(true);
   };
 
-  const handleCancel = () => {
+  const handleCancel = (): void => {
     setIsEditing(false);
     setEditTitle(todo.title);
   };
 
-  const handleSave = () => {
+  const handleSave = (): void => {
     if (editTitle.trim() !== '') {
       onUpdate(todo.id, editTitle);
       setIsEditing(false);
     }
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Enter') {
       handleSave();
     } else if (e.key === 'Escape') {
       handleCancel();
     }
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setEditTitle(e.target.value);
   };
 
   return (
@@ -87,7 +99,7 @@ const TodoItem = ({ todo, onToggleComplete, onDelete, onUpdate }) => {
           <TextField
             fullWidth
             value={editTitle}
-            onChange={(e) => setEditTitle(e.target.value)}
+            onChange={handleChange}
             onKeyDown={handleKeyDown}
             autoFocus
           />
@@ -105,4 +117,4 @@ const TodoItem = ({ todo, onToggleComplete, onDelete, onUpdate }) => {
   );
 };
 
-export default TodoItem;
+export default TodoItem; 

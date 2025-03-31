@@ -1,11 +1,19 @@
 import { Box, Divider, List, Paper, Typography } from '@mui/material';
 import React from 'react';
+import { Todo } from '../types/todo';
 import TodoItem from './TodoItem';
 
-const TodoList = ({ todos, onToggleComplete, onDelete, onUpdate }) => {
+interface TodoListProps {
+  todos: Todo[];
+  onToggleComplete: (id: number, completed: boolean) => void;
+  onDelete: (id: number) => void;
+  onUpdate: (id: number, title: string) => void;
+}
+
+const TodoList: React.FC<TodoListProps> = ({ todos, onToggleComplete, onDelete, onUpdate }) => {
   // 完了/未完了でタスクを分類
-  const completedTodos = todos.filter(todo => todo.completed);
-  const activeTodos = todos.filter(todo => !todo.completed);
+  const completedTodos: Todo[] = todos.filter(todo => todo.completed);
+  const activeTodos: Todo[] = todos.filter(todo => !todo.completed);
 
   // タスクが1つもない場合のメッセージ
   if (todos.length === 0) {
