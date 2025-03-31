@@ -3,15 +3,15 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import {
-    Box,
-    Checkbox,
-    IconButton,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
-    TextField,
-    Tooltip
+  Box,
+  Checkbox,
+  IconButton,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  TextField,
+  Tooltip
 } from '@mui/material';
 import React, { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { Todo } from '../types/todo';
@@ -110,10 +110,11 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, onToggleComplete, onDelete, o
             value={editTitle}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            fullWidth
             autoFocus
             size="small"
             sx={{
+              minWidth: '50%',
+              maxWidth: '50%',
               '& .MuiOutlinedInput-root': {
                 borderRadius: 2,
                 '&:hover fieldset': {
